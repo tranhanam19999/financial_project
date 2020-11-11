@@ -2,19 +2,36 @@ import React, {useEffect, useState} from "react"
 import {useSelector, useDispatch} from "react-redux"
 import {gett} from "../../store/listitem"
 import {loadScripts} from "../../_utils"
+import Paginator from '../../components/Pagination/'
 import SingleProduct from "../../components/SingleProduct"
-
-const Shop = () => {
+import Header from '../../components/Layout/Header'
+import _ from 'lodash/array'
+const ShopPage = () => {
+    const [page,setPage] = useState(1)
+    // const [valueTop,setValueTop] = useState(0)
+    // const [valueBot,setValueBot] = useState(0)
     const dispatch = useDispatch()
+    
+    let valueTop
+    let valueBot
     const listItem = useSelector(state => state.listitem)
-
-    useEffect(() => {
+    useEffect(() => {          
         dispatch(gett())
         document.onload = loadScripts()
     }, [])
-
+    let a = []
+    for(let i = 1; i < Math.ceil(listItem.length/9);i++) {
+        a.push(i)
+    }
+    const checkFilter = () => {
+        valueTop = document.getElementById('amountTop').value
+        valueBot = document.getElementById('amountBot').value
+        console.log('valueTop ', valueTop)
+        console.log('valueBot ', valueBot)
+    }
     return(
         <>
+        <Header/>
         {/* Start Search Popup */}
         <div className="box-search-content search_active block-bg close__top">
             <form id="search_mini_form" className="minisearch" action="#">
@@ -62,7 +79,7 @@ const Shop = () => {
                         <h3 className="wedget__title">Product Categories</h3>
                     <ul>
                         <li>
-                        <a href="#" onClick={() => {console.log(listItem); dispatch(gett())}}>
+                        <a href="#" onClick={() => {dispatch(gett())}}>
                             Biography <span>(3)</span>
                         </a>
                         </li>
@@ -147,20 +164,21 @@ const Shop = () => {
                     <h3 className="wedget__title">Filter by price</h3>
                     <div className="content-shopby">
                         <div className="price_filter s-filter clear">
-                        <form action="#" method="GET">
-                            <div id="slider-range" />
-                            <div className="slider__range--output">
-                            <div className="price__output--wrap">
-                                <div className="price--output">
-                                <span>Price :</span>
-                                <input type="text" id="amount" readOnly />
+                            <form action="#" method="GET">
+                                <div id="slider-range" />
+                                <div className="slider__range--output" id="rangeAmount">
+                                    <div className="price__output--wrap">
+                                        <div className="price--output">
+                                            <span style={{float:'left'}}>Amount: </span>
+                                            <input style={{float:'left'}} type="text" id="amountBot" readOnly />
+                                            <input style={{float:'left'}} type="text" id="amountTop" readOnly />
+                                        </div>
+                                        <div className="price--filter">
+                                            <a onClick={() => checkFilter()}>Filter</a>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div className="price--filter">
-                                <a href="#">Filter</a>
-                                </div>
-                            </div>
-                            </div>
-                        </form>
+                            </form>
                         </div>
                     </div>
                     </aside>
@@ -267,37 +285,65 @@ const Shop = () => {
                     >
                     <div className="row">
                         {
-                            (() => {
-                                return (listItem == []) ? <></> 
-                                : listItem.map(item => {
-                                    return(<SingleProduct key={item._id} course={item}/>)
-                                })
-                                // const content = []
-                                // for(let i=0; i<12; i++) {
-                                //     content.push(<SingleProduct/>)
-                                // }
-                                // return content
-                            })()
+                            
+                            // (valueTop == null || valueBot == null) ? 
+                            // (() => {
+                            //     return (listItem == []) ? <></> 
+                            //     : listItem.map(item => {
+                            //         return(<SingleProduct key={item._id} prod={item}/>)
+                            //     })
+                            // })()
+                            listItem == [] ? <></> : 
+                            <Paginator childrenItem = {listItem} page={page}/>
+                            // (() => {
+                            //     let childrenListItem = listItem ? _.chunk(listItem,6) : []
+                            //     return ( childrenListItem == [] && listItem == []  && childrenListItem[page] == null)  ? <></> 
+                            //     : childrenListItem[page].map(item => {
+                            //         return(<SingleProduct key={item._id} prod={item}/>)
+                            //     })
+                            // })()
+
+                            // : 
+                            // (() => {
+                            //     return (listItem == []) ? <></>
+                            //     : listItem.map(item => {      
+                            //         console.log(valueBot)                              
+                            //         if(item.price > valueBot) {
+                            //             console.log(item.price , ' ' , valueBot)
+                            //             return <SingleProduct key={item._id} prod={item}/>
+                            //         }
+                            //     })
+                            // })()
                         }
                     </div>
                     <ul className="wn__pagination">
-                        <li className="active">
-                        <a href="#">1</a>
+                        {
+                            (() => {
+                                return (listItem == []) ? <></> : a.map((val,i) => {
+                                        return <li onClick={() => setPage(val)}>
+                                            <a href="#">{val}</a>
+                                        </li>
+                                })
+                                                              
+                            })()
+                        }
+                        {/* <li className="active">
+                            <a href="#">1</a>
                         </li>
                         <li>
-                        <a href="#">2</a>
+                            <a href="#">2</a>
                         </li>
                         <li>
-                        <a href="#">3</a>
+                            <a href="#">3</a>
                         </li>
                         <li>
-                        <a href="#">4</a>
+                            <a href="#">4</a>
                         </li>
                         <li>
-                        <a href="#">
-                            <i className="zmdi zmdi-chevron-right" />
-                        </a>
-                        </li>
+                            <a href="#">
+                                <i className="zmdi zmdi-chevron-right" />
+                            </a>
+                        </li> */}
                     </ul>
                     </div>
                     <div
@@ -624,8 +670,9 @@ const Shop = () => {
             </div>
         </div>
         {/* End Shop Page */}
+        
         </>
     )
 }
 
-export default Shop
+export default ShopPage

@@ -1,6 +1,7 @@
 import React , {useEffect, useState} from 'react'
 import {useSelector} from 'react-redux'
 import { updateUser } from '../../api/'
+import Header from '../../components/Layout/Header'
 import {loadScripts} from '../../_utils/'
 const ProfilePage = () => {
     const {user} = useSelector(state => {return state})
@@ -25,6 +26,26 @@ const ProfilePage = () => {
     }
     if (user)
         return (
+            <>
+            <Header/>
+            <div className="ht__bradcaump__area bg-image--6">
+                <div className="container">
+                    <div className="row">
+                        <div className="col-lg-12">
+                            <div className="bradcaump__inner text-center">
+                                <h2 className="bradcaump-title">Profile Page</h2>
+                                <nav className="bradcaump-content">
+                                    <a className="breadcrumb_item" href="index.html">
+                                        Home
+                                    </a>
+                                    <span className="brd-separetor">/</span>
+                                    <span className="breadcrumb_item active">Profile</span>
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <section className="wn__checkout__area section-padding--lg bg__white">
                 <div className="container">
                     <div className="row">
@@ -118,6 +139,7 @@ const ProfilePage = () => {
                     </div>
                 </div>
             </section>
+            </>
         )
     return (
         <>

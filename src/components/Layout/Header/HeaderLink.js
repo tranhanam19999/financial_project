@@ -4,16 +4,17 @@ import {Link, Redirect} from 'react-router-dom'
 import {logout} from '../../../store/user'
 const HeaderLink = props => {
 	const dispatch = useDispatch()
-	const {user} = useSelector(state => {return state})
+	const user = useSelector(state => {return state.user})
+	const cartitem = useSelector(state => {return state.cartitem})
     return(
         <header id="wn__header" className="header__area header__absolute sticky__header">
 			<div className="container-fluid">
 				<div className="row">
 					<div className="col-md-6 col-sm-6 col-6 col-lg-2">
 						<div className="logo">
-							<a href="/">
+							<Link to="/">
 								<img src="images/logo/logo.png" alt="logo images"/>
-							</a>
+							</Link>
 						</div>
 					</div>
 					<div className="col-lg-8 d-none d-lg-block">
@@ -130,18 +131,26 @@ const HeaderLink = props => {
 						<ul className="header__sidebar__right d-flex justify-content-end align-items-center">
 							<li className="shop_search"><a className="search__active" href="#"></a></li>
 							<li className="wishlist"><a href="#"></a></li>
-							<li className="shopcart"><a className="cartbox_active" href="#"><span className="product_qun">3</span></a>
+							<li className="shopcart">
+								<a className="cartbox_active" href="#">
+									<span className="product_qun">
+										{cartitem ? cartitem.length : 0}
+									</span>
+								</a>
 								<div className="block-minicart minicart__active">
 									<div className="minicart-content-wrapper">
 										<div className="micart__close">
 											<span>close</span>
 										</div>
 										<div className="items-total d-flex justify-content-between">
-											<span>3 items</span>
+											<span>{cartitem ? cartitem.length : 0} items</span>
 											<span>Cart Subtotal</span>
 										</div>
 										<div className="total_amount text-right">
-											<span>$66.00</span>
+											<span>${cartitem ? cartitem.reduce((sum,val) => {																										
+													return parseInt(sum += (val.price*(val.sale/100)))
+												},0
+											) : '$0'}</span>
 										</div>
 										<div className="mini_action cart">
 											<Link className="cart__btn" to="/Cart">View and edit cart</Link>
