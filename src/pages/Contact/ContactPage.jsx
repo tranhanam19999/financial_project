@@ -1,10 +1,6 @@
-import React, {useEffect} from 'react'
+import React from 'react'
 import ProductItem from '../../components/ProductItem'
 const ContactPage = props => {
-	useEffect(() => {
-		console.log('Im home!')
-       // document.onload = loadScripts()
-	},[])
     return(
 		<> 
             <section className="wn__product__area brown--color pt--80  pb--30">

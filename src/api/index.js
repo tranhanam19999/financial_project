@@ -40,7 +40,18 @@ export const getProd = async () => {
     let value = await res.json()
     return value
     // console.log('data ',data)
-    // return data
-    
+    // return data 
+}
+export const sendTrans = async (items, user) => {
+    let temp = {
+        user,items
+    }
+    let res = await fetch('http://localhost:4000/tran/createTrans', {
+        method: 'post',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(temp)
+    })
 }
 export default {getUser,updateUser,getProd}

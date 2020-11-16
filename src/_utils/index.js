@@ -22,7 +22,6 @@ const loadScripts = () => {
                     resolve();
                 }
                 catch (err) {
-                    console.log(err)
                     reject(err)
                 }
             })

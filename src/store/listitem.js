@@ -7,7 +7,6 @@ const slice = createSlice({
     reducers: {
         getProps: (state,action) => {
             state = action.payload
-            console.log("state ", state)
             return state
         }
     }

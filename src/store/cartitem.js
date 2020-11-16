@@ -18,11 +18,15 @@ const slice = createSlice({
         discardItem: (state,action) => {
             state = action.payload
             return state
+        },
+        discardAllItem: (state,action) => {
+            state = []
+            return state
         }
     }
 })
 export default slice.reducer
-const {importItem, discardItem} = slice.actions
+const {importItem, discardItem, discardAllItem} = slice.actions
 export const importToCart = (item) => async dispatch => {
     try {
         dispatch(importItem(item))
@@ -41,5 +45,13 @@ export const discardFromCart = (item,cartitem) => async dispatch => {
     } 
     catch (e) {
         return console.log('Error ', e.message)
+    }
+}
+export const discardAll = () => async dispatch => {
+    try {
+        dispatch(discardAllItem())
+    }
+    catch (e) {
+        console.log('Error ', e.message)
     }
 }

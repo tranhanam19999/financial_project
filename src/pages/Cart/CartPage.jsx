@@ -1,9 +1,10 @@
 import React, {useEffect} from 'react'
 import {useSelector, useDispatch} from 'react-redux'
-import {discardFromCart} from '../../store/cartitem'
+import {discardAll, discardFromCart} from '../../store/cartitem'
 import Header from '../../components/Layout/Header/index'
 import {loadScripts} from "../../_utils/"
 import {Link, Redirect} from 'react-router-dom'
+import {sendTrans} from '../../api/'
 const TableBody = () => {
   const dispatch = useDispatch()
   const cartitem = useSelector(state => {return state.cartitem})
@@ -11,7 +12,7 @@ const TableBody = () => {
   cartitem.map(val => {
   return (
       <tr>
-        <td className="product-thumbnail"><a href="#"><img src={val.pictures[0]} alt="product img" /></a></td>
+        <td className="product-thumbnail"><a href="#"><img src={val.pictures[0]} height={180} /></a></td>
         <td className="product-name"><a href="#">{val.name}</a></td>
         <td className="product-price"><span className="amount">{val.price*(val.sale/100)}</span></td>
         <td className="product-remove"><a href="#" onClick={() => dispatch(discardFromCart(val,cartitem))}>X</a></td>
@@ -19,13 +20,19 @@ const TableBody = () => {
   )}) : <></>
 }
 const CartPage = () => {
+  const dispatch = useDispatch()
+  const checkoutCart = async (item,user) => {
+    await sendTrans(item,user)
+    await dispatch(discardAll())
+  }
+  const user = useSelector(state => {return state.user})
   const cartitem = useSelector(state => {return state.cartitem})
     useEffect(() => {
       document.onload = loadScripts()
     })
     return (
       <>
-      <Header/>{/* Start Search Popup */}
+      <Header/>
         <div className="box-search-content search_active block-bg close__top">
             <form id="search_mini_form" className="minisearch" action="#">
             <div className="field__search">
@@ -41,24 +48,22 @@ const CartPage = () => {
             <span>close</span>
             </div>
         </div>
-        {/* End Search Popup */}
-        {/* Start Bradcaump area */}
         <div className="ht__bradcaump__area bg-image--6">
             <div className="container">
-            <div className="row">
-                <div className="col-lg-12">
-                <div className="bradcaump__inner text-center">
-                    <h2 className="bradcaump-title">Cart Page</h2>
-                    <nav className="bradcaump-content">
-                    <a className="breadcrumb_item" href="index.html">
-                        Home
-                    </a>
-                    <span className="brd-separetor">/</span>
-                    <span className="breadcrumb_item active">Cart Page</span>
-                    </nav>
-                </div>
-                </div>
-            </div>
+              <div className="row">
+                  <div className="col-lg-12">
+                    <div className="bradcaump__inner text-center">
+                        <h2 className="bradcaump-title">Cart Page</h2>
+                        <nav className="bradcaump-content">
+                        <a className="breadcrumb_item" href="index.html">
+                            Home
+                        </a>
+                        <span className="brd-separetor">/</span>
+                        <span className="breadcrumb_item active">Cart Page</span>
+                        </nav>
+                    </div>
+                  </div>
+              </div>
             </div>
         </div>
         
@@ -88,7 +93,7 @@ const CartPage = () => {
                 <ul className="cart__btn__list d-flex flex-wrap flex-md-nowrap flex-lg-nowrap justify-content-between">
                   {/* <li><a href="#">Update Cart</a></li> */}
                   <li><Link to="/Shop">Update Cart</Link></li>
-                  <li><Link to="/Profile">Check Out</Link></li>
+                  <li><Link to="/MyTrans" onClick={() => checkoutCart(cartitem,user)}>Check Out</Link></li>
                   {/* <li><a href="#">Check Out</a></li> */}
                 </ul>
               </div>

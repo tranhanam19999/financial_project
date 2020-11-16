@@ -18,7 +18,6 @@ const HomePage = () => {
 		document.onload = loadScripts()
 	}, [])
 	if(listItem) {
-		console.log('Hello!')
 	}
 	return <React.Fragment>
 			<Header/>
@@ -35,7 +34,6 @@ const HomePage = () => {
 				</div>
 				<div className="row mt--50">
 					{listItem ? listItem.slice(5,8).map((val,i) => {
-						console.log(val)
 						return <SingleProduct key={val._id + i} prod={val}/>
 					}) : <></>}	
 				</div>  

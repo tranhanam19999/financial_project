@@ -12,7 +12,6 @@ const AccountPage = () => {
     const dispatch = useDispatch()
     const {user} = useSelector(state => {return state})
     if (user) {
-        console.log(user)
         return (
             <>
                 <Redirect to="/"/>

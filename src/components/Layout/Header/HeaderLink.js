@@ -179,6 +179,7 @@ const HeaderLink = props => {
 															user ? 
 																<>
 																	<span><Link to="/Profile">Profile</Link></span>
+																	<span><Link to="/MyBook">My Book</Link></span>
 																	<span><a onClick={() => {
 																		try {
 																			dispatch(logout())

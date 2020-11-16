@@ -68,6 +68,25 @@ const ShopPage = () => {
             </div>
             </div>
         </div>
+        <div classname="ht__bradcaump__area bg-image--6">
+            <div classname="container">
+                <div classname="row">
+                    <div classname="col-lg-12">
+                        <div classname="bradcaump__inner text-center">
+                            <h2 classname="bradcaump-title">Shop Grid</h2>
+                            <nav classname="bradcaump-content">
+                                <a classname="breadcrumb_item" href="index.html">
+                                Home
+                                </a>
+                                <span classname="brd-separetor">/</span>
+                                <span classname="breadcrumb_item active">Shop Grid</span>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         {/* End Bradcaump area */}
         {/* Start Shop Page */}
         <div className="page-shop-sidebar left--sidebar bg--white section-padding--lg">
