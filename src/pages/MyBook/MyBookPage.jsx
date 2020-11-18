@@ -1,10 +1,11 @@
 import React, {useEffect} from 'react'
 import {loadScripts} from '../../_utils'
 import Header from '../../components/Layout/Header'
+
 const MyBookPage = () => {
     useEffect(() => {
         document.onload = loadScripts()
-    })
+    },[])
     return (
         <>
             <Header/>

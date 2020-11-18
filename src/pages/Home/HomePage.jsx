@@ -1,6 +1,5 @@
 import React, {useEffect,useState} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
-import ProductItem from '../../components/ProductItem'
 import HeaderContent from "../../components/Layout/Header/HeaderContent"
 import {loadScripts} from '../../_utils/'
 import {gett} from '../../store/listitem'

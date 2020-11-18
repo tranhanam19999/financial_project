@@ -2,7 +2,7 @@ import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import {Link, Redirect} from 'react-router-dom'
 import {logout} from '../../../store/user'
-const HeaderLink = props => {
+const HeaderLink = () => {
 	const dispatch = useDispatch()
 	const user = useSelector(state => {return state.user})
 	const cartitem = useSelector(state => {return state.cartitem})
@@ -180,6 +180,7 @@ const HeaderLink = props => {
 																<>
 																	<span><Link to="/Profile">Profile</Link></span>
 																	<span><Link to="/MyBook">My Book</Link></span>
+																	<span><Link to="/MyTran">My Tran</Link></span>
 																	<span><a onClick={() => {
 																		try {
 																			dispatch(logout())

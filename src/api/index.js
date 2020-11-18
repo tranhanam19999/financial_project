@@ -54,4 +54,18 @@ export const sendTrans = async (items, user) => {
         body: JSON.stringify(temp)
     })
 }
-export default {getUser,updateUser,getProd}
+export const getUsersTran = async(user) => {
+    let res = await fetch('http://localhost:4000/tran/getUsersTran', {
+        method: 'post',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(user)
+    })
+    let value = await res.json()
+    return value
+}
+export default {getUser,
+                updateUser,
+                getProd,
+                getUsersTran}

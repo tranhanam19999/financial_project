@@ -1,5 +1,4 @@
-import React, {useEffect} from 'react';
-import Layout from './components/Layout'
+import React from 'react';
 import HomePage from './pages/Home/HomePage'
 import ShopPage from './pages/Shop/ShopPage'
 import ContactPage from './pages/Contact/ContactPage'
@@ -8,25 +7,23 @@ import CartPage from './pages/Cart/CartPage'
 import ProfilePage from './pages/ProfilePage/ProfilePage'
 import MyBookPage from './pages/MyBook/MyBookPage'
 import {Route} from 'react-router-dom'
-import Header from "../src/components/Layout/Header/"
 import Footer from "../src/components/Layout/Footer/"
-import MyTransPage from './pages/MyTrans/MyTransPage';
+import MyTranPage from './pages/MyTran/MyTranPage';
 function App() {
   	return (
 		<div className="App">
 			<div className="wrapper" id="wrapper">				
-					<Route exact path="/" component={HomePage} />
-					<Route exact path="/Contact" component={ContactPage} />
-					<Route exact path="/Account" component={AccountPage}/>
-					<Route exact path="/Cart" component={CartPage}/>
-					<Route exact path="/Shop" component={ShopPage}/>
-					<Route exact path="/Profile" component={ProfilePage}/>
-					<Route exact path="/MyBook" component={MyBookPage}/>
-					<Route exact path="/MyTrans" component={MyTransPage}/>
+				<Route exact path="/" component={HomePage} />
+				<Route exact path="/Contact" component={ContactPage} />
+				<Route exact path="/Account" component={AccountPage}/>
+				<Route exact path="/Cart" component={CartPage}/>
+				<Route exact path="/Shop" component={ShopPage}/>
+				<Route exact path="/Profile" component={ProfilePage}/>
+				<Route exact path="/MyBook" component={MyBookPage}/>
+				<Route exact path="/MyTran" component={MyTranPage}/>
 				<Footer/>
 			</div>
-		</div>
-  	);
+		</div>);
 }
 
 export default App;

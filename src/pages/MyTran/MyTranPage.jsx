@@ -1,12 +1,31 @@
-import React from 'react'
-import { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import Header from '../../components/Layout/Header'
 import { loadScripts } from '../../_utils'
-
+import { getUsersTran } from '../../api/'
+import { useSelector } from 'react-redux'
 const MyTransPage = () => {
-    useEffect(()=> {
-        document.onload=loadScripts()
-    })
+    const [listTran,setListTran] = useState()
+    const user = useSelector(state => {return state.user})
+    useEffect(() => {
+        document.onload = loadScripts()
+        handleData()
+    }, [])
+    const handleData = async () => {
+        const data = await getUsersTran(user)
+        setListTran(data)
+    }
+    const TableBody = () => {
+        //console.log('abc')
+        console.log('listTran ', listTran)
+        return listTran == null ? <></> : listTran.map(val => {
+            return(<tbody>
+                <tr>                        
+                    <td className="product-name"><a href="#">{val.product.map(book => {return book.name + '. '})}</a></td>
+                    <td className="product-price"><span className="amount">{val.date}</span></td>
+                    <td className="product-price"><span className="amount">{val.status}</span></td>
+                </tr>
+            </tbody>)})
+    }
     return (
         <>
         <Header/>
@@ -33,13 +52,13 @@ const MyTransPage = () => {
             <div className="row">
                 <div className="col-lg-12">
                 <div className="bradcaump__inner text-center">
-                    <h2 className="bradcaump-title">Shop Grid</h2>
+                    <h2 className="bradcaump-title">My Transaction</h2>
                     <nav className="bradcaump-content">
                     <a className="breadcrumb_item" href="index.html">
                         Home
                     </a>
                     <span className="brd-separetor">/</span>
-                    <span className="breadcrumb_item active">Shop Grid</span>
+                    <span className="breadcrumb_item active">My Transaction</span>
                     </nav>
                 </div>
                 </div>
@@ -60,13 +79,7 @@ const MyTransPage = () => {
                             <th className="product-remove">Status</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            <tr>                        
-                                <td className="product-name"><a href="#">Natoque penatibus</a></td>
-                                <td className="product-price"><span className="amount">$165.00</span></td>
-                                <td className="product-quantity"><input type="number" defaultValue={1} /></td>
-                            </tr>
-                        </tbody>
+                        <TableBody />
                         </table>
                     </div>
                     </form> 

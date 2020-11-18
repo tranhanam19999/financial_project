@@ -31,7 +31,7 @@ const CartPage = () => {
       document.onload = loadScripts()
     })
     return (
-      <>
+    <>
       <Header/>
         <div className="box-search-content search_active block-bg close__top">
             <form id="search_mini_form" className="minisearch" action="#">
@@ -93,7 +93,7 @@ const CartPage = () => {
                 <ul className="cart__btn__list d-flex flex-wrap flex-md-nowrap flex-lg-nowrap justify-content-between">
                   {/* <li><a href="#">Update Cart</a></li> */}
                   <li><Link to="/Shop">Update Cart</Link></li>
-                  <li><Link to="/MyTrans" onClick={() => checkoutCart(cartitem,user)}>Check Out</Link></li>
+                  <li><Link to="/MyTran" onClick={() => checkoutCart(cartitem,user)}>Check Out</Link></li>
                   {/* <li><a href="#">Check Out</a></li> */}
                 </ul>
               </div>
@@ -135,7 +135,7 @@ const CartPage = () => {
           </div>
         </div>  
       </div>
-      </>
+    </>
     )
 }
 export default CartPage
