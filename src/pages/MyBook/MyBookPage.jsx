@@ -1,11 +1,30 @@
-import React, {useEffect} from 'react'
+import React, {useEffect,useState} from 'react'
 import {loadScripts} from '../../_utils'
 import Header from '../../components/Layout/Header'
-
+import { getUsersTran } from '../../api/'
+import { useSelector } from 'react-redux'
 const MyBookPage = () => {
+    const [listTran,setListTran] = useState()
+    const user = useSelector(state => {return state.user})
     useEffect(() => {
         document.onload = loadScripts()
+        handleData()
     },[])
+    const handleData = async () => {
+        const data = await getUsersTran(user)
+        setListTran(data)
+    }
+    const handleCategory = (book) => {
+        console.log(book.info.category)
+        switch(book.info.category[0]) {
+            case 'Love': return "cat--1" 
+            case 'Politics': return "cat--2"
+            case 'Fun': return "cat--3" 
+            case 'Kids': return "cat--4"  
+            case 'IT': return "cat--5" 
+            case 'Cook': return "cat--6"       
+        }
+    }
     return (
         <>
             <Header/>
@@ -31,13 +50,13 @@ const MyBookPage = () => {
                 <div className="row">
                     <div className="col-lg-12">
                     <div className="bradcaump__inner text-center">
-                        <h2 className="bradcaump-title">Cart Page</h2>
+                        <h2 className="bradcaump-title">My Book Page</h2>
                         <nav className="bradcaump-content">
                         <a className="breadcrumb_item" href="index.html">
                             Home
                         </a>
                         <span className="brd-separetor">/</span>
-                        <span className="breadcrumb_item active">Cart Page</span>
+                        <span className="breadcrumb_item active">My Book Page</span>
                         </nav>
                     </div>
                     </div>
@@ -46,272 +65,44 @@ const MyBookPage = () => {
             </div>
             <section className="wn__portfolio__area gallery__masonry__activation bg--white mt--40 pb--100">
                 <div className="container-fluid">
-                <div className="row">
-                    <div className="col-lg-12">
-                    <div className="gallery__menu">
-                        <button data-filter="*" className="is-checked">Filter - All</button>
-                        <button data-filter=".cat--1">Company News</button>
-                        <button data-filter=".cat--2">Computers</button>
-                        <button data-filter=".cat--3">General News</button>
-                        <button data-filter=".cat--4">Hipster Content</button>
-                        <button data-filter=".cat--5">Just Food</button>
-                    </div>
-                    </div>
-                </div>
-                <div className="row masonry__wrap">
-                    {/* Start Single Portfolio */}
-                    <div className="col-lg-4 col-xl-3 col-md-6 col-sm-6 col-12 gallery__item cat--1">
-                    <div className="portfolio">
-                        <div className="thumb">
-                        <a href="portfolio-details.html">
-                            <img src="images/portfolio/md-img/1.jpg" alt="portfolio images" />
-                        </a>
-                        <div className="search">
-                            <a href="images/portfolio/big-2/1.jpg" data-lightbox="grportimg" data-title="My caption"><i className="zmdi zmdi-search" /></a>
+                    <div className="row">
+                        <div className="col-lg-12">
+                        <div className="gallery__menu">
+                            <button data-filter="*" className="is-checked">Filter - All</button>
+                            <button data-filter=".cat--1">Love</button>
+                            <button data-filter=".cat--2">Politics</button>
+                            <button data-filter=".cat--3">Fun</button>
+                            <button data-filter=".cat--4">Kids</button>
+                            <button data-filter=".cat--5">IT</button>
+                            <button data-filter=".cat--6">Cook</button>
                         </div>
-                        <div className="link">
-                            <a href="portfolio-details.html"><i className="fa fa-link" /></a>
-                        </div>
-                        </div>
-                        <div className="content">
-                        <h6><a href="portfolio-details.html">Coffee &amp; Cookie Time</a></h6>
-                        <p>road theme</p>
                         </div>
                     </div>
+                    <div className="row masonry__wrap">
+                        {listTran == null ? <></> : listTran.map(val => {
+                        if(val.status == 'SUCCESS') {
+                            return val.product.map(book => {
+                                return(<div className={"col-lg-4 col-xl-3 col-md-6 col-sm-6 col-12 gallery__item" +  " " + handleCategory(book)}>
+                                <div className="portfolio">
+                                    <div className="thumb">
+                                        <a href="portfolio-details.html">
+                                            <img src="images/portfolio/md-img/1.jpg" alt="portfolio images" />
+                                        </a>
+                                    <div className="search">
+                                        <a href={book.link ?  book.link.full : null} data-lightbox="grportimg" data-title="My caption"><i className="zmdi zmdi-cloud-download"/></a>
+                                    </div>
+                                    <div className="link">
+                                        <a href="portfolio-details.html"><i className="fa fa-link" /></a>
+                                    </div>
+                                    </div>
+                                    <div className="content">
+                                        <h6><a href="portfolio-details.html">{book.name}</a></h6>
+                                        <p>{book.name}</p>
+                                    </div>
+                                </div>
+                            </div>)})}}) }
+                        {/* End Single Portfolio */}
                     </div>
-                    {/* End Single Portfolio */}
-                    {/* Start Single Portfolio */}
-                    <div className="col-lg-4 col-xl-3 col-md-6 col-sm-6 col-12 gallery__item cat--2">
-                    <div className="portfolio">
-                        <div className="thumb">
-                        <a href="portfolio-details.html">
-                            <img src="images/portfolio/md-img/2.jpg" alt="portfolio images" />
-                        </a>
-                        <div className="search">
-                            <a href="images/portfolio/big-2/2.jpg" data-lightbox="grportimg" data-title="My caption"><i className="zmdi zmdi-search" /></a>
-                        </div>
-                        <div className="link">
-                            <a href="portfolio-details.html"><i className="fa fa-link" /></a>
-                        </div>
-                        </div>
-                        <div className="content">
-                        <h6><a href="portfolio-details.html">Coffee &amp; Cookie Time</a></h6>
-                        <p>road theme</p>
-                        </div>
-                    </div>
-                    </div>
-                    {/* End Single Portfolio */}
-                    {/* Start Single Portfolio */}
-                    <div className="col-lg-4 col-xl-3 col-md-6 col-sm-6 col-12 gallery__item cat--3">
-                    <div className="portfolio">
-                        <div className="thumb">
-                        <a href="portfolio-details.html">
-                            <img src="images/portfolio/md-img/3.jpg" alt="portfolio images" />
-                        </a>
-                        <div className="search">
-                            <a href="images/portfolio/big-2/3.jpg" data-lightbox="grportimg" data-title="My caption"><i className="zmdi zmdi-search" /></a>
-                        </div>
-                        <div className="link">
-                            <a href="portfolio-details.html"><i className="fa fa-link" /></a>
-                        </div>
-                        </div>
-                        <div className="content">
-                        <h6><a href="portfolio-details.html">Coffee &amp; Cookie Time</a></h6>
-                        <p>road theme</p>
-                        </div>
-                    </div>
-                    </div>
-                    {/* End Single Portfolio */}
-                    {/* Start Single Portfolio */}
-                    <div className="col-lg-4 col-xl-3 col-md-6 col-sm-6 col-12 gallery__item cat--4">
-                    <div className="portfolio">
-                        <div className="thumb">
-                        <a href="portfolio-details.html">
-                            <img src="images/portfolio/md-img/4.jpg" alt="portfolio images" />
-                        </a>
-                        <div className="search">
-                            <a href="images/portfolio/big-2/1.jpg" data-lightbox="grportimg" data-title="My caption"><i className="zmdi zmdi-search" /></a>
-                        </div>
-                        <div className="link">
-                            <a href="portfolio-details.html"><i className="fa fa-link" /></a>
-                        </div>
-                        </div>
-                        <div className="content">
-                        <h6><a href="portfolio-details.html">Coffee &amp; Cookie Time</a></h6>
-                        <p>road theme</p>
-                        </div>
-                    </div>
-                    </div>
-                    {/* End Single Portfolio */}
-                    {/* Start Single Portfolio */}
-                    <div className="col-lg-4 col-xl-3 col-md-6 col-sm-6 col-12 gallery__item cat--5">
-                    <div className="portfolio">
-                        <div className="thumb">
-                        <a href="portfolio-details.html">
-                            <img src="images/portfolio/md-img/5.jpg" alt="portfolio images" />
-                        </a>
-                        <div className="search">
-                            <a href="images/portfolio/big-2/1.jpg" data-lightbox="grportimg" data-title="My caption"><i className="zmdi zmdi-search" /></a>
-                        </div>
-                        <div className="link">
-                            <a href="portfolio-details.html"><i className="fa fa-link" /></a>
-                        </div>
-                        </div>
-                        <div className="content">
-                        <h6><a href="portfolio-details.html">Coffee &amp; Cookie Time</a></h6>
-                        <p>road theme</p>
-                        </div>
-                    </div>
-                    </div>
-                    {/* End Single Portfolio */}
-                    {/* Start Single Portfolio */}
-                    <div className="col-lg-4 col-xl-3 col-md-6 col-sm-6 col-12 gallery__item cat--2">
-                    <div className="portfolio">
-                        <div className="thumb">
-                        <a href="portfolio-details.html">
-                            <img src="images/portfolio/md-img/6.jpg" alt="portfolio images" />
-                        </a>
-                        <div className="search">
-                            <a href="images/portfolio/big-2/2.jpg" data-lightbox="grportimg" data-title="My caption"><i className="zmdi zmdi-search" /></a>
-                        </div>
-                        <div className="link">
-                            <a href="portfolio-details.html"><i className="fa fa-link" /></a>
-                        </div>
-                        </div>
-                        <div className="content">
-                        <h6><a href="portfolio-details.html">Coffee &amp; Cookie Time</a></h6>
-                        <p>road theme</p>
-                        </div>
-                    </div>
-                    </div>
-                    {/* End Single Portfolio */}
-                    {/* Start Single Portfolio */}
-                    <div className="col-lg-4 col-xl-3 col-md-6 col-sm-6 col-12 gallery__item cat--3">
-                    <div className="portfolio">
-                        <div className="thumb">
-                        <a href="portfolio-details.html">
-                            <img src="images/portfolio/md-img/7.jpg" alt="portfolio images" />
-                        </a>
-                        <div className="search">
-                            <a href="images/portfolio/big-2/1.jpg" data-lightbox="grportimg" data-title="My caption"><i className="zmdi zmdi-search" /></a>
-                        </div>
-                        <div className="link">
-                            <a href="portfolio-details.html"><i className="fa fa-link" /></a>
-                        </div>
-                        </div>
-                        <div className="content">
-                        <h6><a href="portfolio-details.html">Coffee &amp; Cookie Time</a></h6>
-                        <p>road theme</p>
-                        </div>
-                    </div>
-                    </div>
-                    {/* End Single Portfolio */}
-                    {/* Start Single Portfolio */}
-                    <div className="col-lg-4 col-xl-3 col-md-6 col-sm-6 col-12 gallery__item cat--4">
-                    <div className="portfolio">
-                        <div className="thumb">
-                        <a href="portfolio-details.html">
-                            <img src="images/portfolio/md-img/8.jpg" alt="portfolio images" />
-                        </a>
-                        <div className="search">
-                            <a href="images/portfolio/big-2/3.jpg" data-lightbox="grportimg" data-title="My caption"><i className="zmdi zmdi-search" /></a>
-                        </div>
-                        <div className="link">
-                            <a href="portfolio-details.html"><i className="fa fa-link" /></a>
-                        </div>
-                        </div>
-                        <div className="content">
-                        <h6><a href="portfolio-details.html">Coffee &amp; Cookie Time</a></h6>
-                        <p>road theme</p>
-                        </div>
-                    </div>
-                    </div>
-                    {/* End Single Portfolio */}
-                    {/* Start Single Portfolio */}
-                    <div className="col-lg-4 col-xl-3 col-md-6 col-sm-6 col-12 gallery__item cat--5">
-                    <div className="portfolio">
-                        <div className="thumb">
-                        <a href="portfolio-details.html">
-                            <img src="images/portfolio/md-img/9.jpg" alt="portfolio images" />
-                        </a>
-                        <div className="search">
-                            <a href="images/portfolio/big-2/2.jpg" data-lightbox="grportimg" data-title="My caption"><i className="zmdi zmdi-search" /></a>
-                        </div>
-                        <div className="link">
-                            <a href="portfolio-details.html"><i className="fa fa-link" /></a>
-                        </div>
-                        </div>
-                        <div className="content">
-                        <h6><a href="portfolio-details.html">Coffee &amp; Cookie Time</a></h6>
-                        <p>road theme</p>
-                        </div>
-                    </div>
-                    </div>
-                    {/* End Single Portfolio */}
-                    {/* Start Single Portfolio */}
-                    <div className="col-lg-4 col-xl-3 col-md-6 col-sm-6 col-12 gallery__item cat--2">
-                    <div className="portfolio">
-                        <div className="thumb">
-                        <a href="portfolio-details.html">
-                            <img src="images/portfolio/md-img/10.jpg" alt="portfolio images" />
-                        </a>
-                        <div className="search">
-                            <a href="images/portfolio/big-2/1.jpg" data-lightbox="grportimg" data-title="My caption"><i className="zmdi zmdi-search" /></a>
-                        </div>
-                        <div className="link">
-                            <a href="portfolio-details.html"><i className="fa fa-link" /></a>
-                        </div>
-                        </div>
-                        <div className="content">
-                        <h6><a href="portfolio-details.html">Coffee &amp; Cookie Time</a></h6>
-                        <p>road theme</p>
-                        </div>
-                    </div>
-                    </div>
-                    {/* End Single Portfolio */}
-                    {/* Start Single Portfolio */}
-                    <div className="col-lg-4 col-xl-3 col-md-6 col-sm-6 col-12 gallery__item cat--3">
-                    <div className="portfolio">
-                        <div className="thumb">
-                        <a href="portfolio-details.html">
-                            <img src="images/portfolio/md-img/5.jpg" alt="portfolio images" />
-                        </a>
-                        <div className="search">
-                            <a href="images/portfolio/big-2/1.jpg" data-lightbox="grportimg" data-title="My caption"><i className="zmdi zmdi-search" /></a>
-                        </div>
-                        <div className="link">
-                            <a href="portfolio-details.html"><i className="fa fa-link" /></a>
-                        </div>
-                        </div>
-                        <div className="content">
-                        <h6><a href="portfolio-details.html">Coffee &amp; Cookie Time</a></h6>
-                        <p>road theme</p>
-                        </div>
-                    </div>
-                    </div>
-                    {/* End Single Portfolio */}
-                    {/* Start Single Portfolio */}
-                    <div className="col-lg-4 col-xl-3 col-md-6 col-sm-6 col-12 gallery__item cat--4">
-                    <div className="portfolio">
-                        <div className="thumb">
-                        <a href="portfolio-details.html">
-                            <img src="images/portfolio/md-img/7.jpg" alt="portfolio images" />
-                        </a>
-                        <div className="search">
-                            <a href="images/portfolio/big-2/2.jpg" data-lightbox="grportimg" data-title="My caption"><i className="zmdi zmdi-search" /></a>
-                        </div>
-                        <div className="link">
-                            <a href="portfolio-details.html"><i className="fa fa-link" /></a>
-                        </div>
-                        </div>
-                        <div className="content">
-                        <h6><a href="portfolio-details.html">Coffee &amp; Cookie Time</a></h6>
-                        <p>road theme</p>
-                        </div>
-                    </div>
-                    </div>
-                    {/* End Single Portfolio */}
-                </div>
                 </div>
             </section>
         </>

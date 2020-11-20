@@ -7,7 +7,7 @@ const SingleProduct = ({prod}) => {
     const cartitem = useSelector(state => {return state.cartitem})
     const [modal, setModal] = useState(false)
     const toggle = () => setModal(!modal)
-    let newPrice = prod ? prod.price*(prod.sale/100) : null
+    let newPrice = prod ? (prod.price - prod.price*(prod.sale/100)) : null
     const handleItem = () => {
         let temp = cartitem.some(val => {
             return val == prod  
@@ -40,8 +40,8 @@ const SingleProduct = ({prod}) => {
                     <a href="single-product.html">{prod.name}</a>
                 </h4>
                 <ul className="prize d-flex">
-                <li>${prod.price*(prod.sale/100)}</li>
-                <li className="old_prize">${prod.price}</li>
+                <li>{prod.price - prod.price*(prod.sale/100)}đ</li>
+                <li className="old_prize">${prod.price}đ</li>
                 </ul>
                 <div className="action">
                 <div className="actions_inner">
