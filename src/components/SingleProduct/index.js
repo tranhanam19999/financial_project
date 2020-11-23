@@ -41,7 +41,7 @@ const SingleProduct = ({prod}) => {
                 </h4>
                 <ul className="prize d-flex">
                 <li>{prod.price - prod.price*(prod.sale/100)}đ</li>
-                <li className="old_prize">${prod.price}đ</li>
+                <li className="old_prize">{prod.price}đ</li>
                 </ul>
                 <div className="action">
                 <div className="actions_inner">
@@ -100,7 +100,7 @@ const SingleProduct = ({prod}) => {
                 <ModalBody>
                     <div className="row">
                         <div className = "col-lg-6 col-12">
-                            <img src={prod ? prod.pictures[0] : null} width={300} height={300}></img>
+                            <img src={prod ? prod.pictures : null} width={300} height={300}></img>
                         </div>
                         <div className = "col-lg-6 col-12">
                             <div className="row">
@@ -121,7 +121,7 @@ const SingleProduct = ({prod}) => {
                             </div>
                             <div className="row">
                                 <div className="quick-desc">
-                                    {prod.info.description}
+                                    {prod ? prod.info.description : null}
                                 </div>
                             </div>
                             <div className="row">

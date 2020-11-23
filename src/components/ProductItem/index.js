@@ -52,7 +52,7 @@ const ProductItem = props => {
                             <ModalBody>
                                 <div className="row">
                                     <div className = "col-lg-6 col-12">
-                                        <img src={props.singleItem ? props.singleItem.pictures[0] : null} width={300} height={300}></img>
+                                        <img src={props.singleItem ? props.singleItem.pictures : null} width={300} height={300}></img>
                                     </div>
                                     <div className = "col-lg-6 col-12">
                                         <div className="row">

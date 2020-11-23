@@ -479,18 +479,18 @@
     $('#slider-range').slider({
         range: true,
         min: 0,
-        max: 80000,
-        values: [11000, 40000],
+        max: 150000,
+        values: [30000, 80000],
         slide: function(event, ui) {
-            $('#amountBot').val('$' + ui.values[0])
-            $('#amountTop').val('$' + ui.values[1])
-            $('#amount').val('$' + ui.values[0] + ' - $' + ui.values[1]);
+            $('#amountBot').val(ui.values[0])
+            $('#amountTop').val(ui.values[1])
+            $('#amount').val(ui.values[0] + ' - ' + ui.values[1]);
         }
     });
     // $('#amount').val('$' + $('#slider-range').slider('values', 0) +
     //     " - $" + $('#slider-range').slider('values', 1));
-    $('#amountBot').val(`$` + $('#slider-range').slider('values', 0))
-    $('#amountTop').val(`$` + $('#slider-range').slider('values', 1))
+    $('#amountBot').val($('#slider-range').slider('values', 0))
+    $('#amountTop').val($('#slider-range').slider('values', 1))
 
 
 /*====== Dropdown ======*/
