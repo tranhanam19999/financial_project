@@ -77,9 +77,9 @@ const ProductItem = props => {
                                             </div>
                                         </div>
                                         <div className="row">
-                                            <div class="addtocart-btn">
-                                                <a href="#">Add to cart</a>
-                                            </div>
+                                            <button className="btn btn-primary">
+                                                Add to cart
+                                            </button>
                                         </div>
                                     </div>
                                 </div>

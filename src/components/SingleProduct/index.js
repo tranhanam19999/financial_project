@@ -125,9 +125,9 @@ const SingleProduct = ({prod}) => {
                                 </div>
                             </div>
                             <div className="row">
-                                <div className="addtocart-btn">
+                                <button style={{background:"black", color: "white"}} className="btn btn-primary">
                                     <a style={{cursor:'pointer'}}onClick={() => handleItem()}>Add to cart</a>
-                                </div>
+                                </button>
                             </div>
                         </div>
                     </div>
