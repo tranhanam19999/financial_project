@@ -16,7 +16,6 @@ export const getUser = (username, password) => {
     })
 }
 export const updateUser = (user) => {
-    console.log('im at update', user)
     return fetch('http://localhost:4000/user/updateUser', {
         method: 'post',
         headers: {
@@ -65,7 +64,49 @@ export const getUsersTran = async(user) => {
     let value = await res.json()
     return value
 }
+export const forgotPassword = async (email) => {
+    let res = await fetch('http://localhost:4000/auth/forgotPassword', {
+        method: 'post',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(email)
+    })
+    let value = await res.json()
+    return value
+}
+export const verifyEmail = async (email,password) => {
+    let temp = {
+        email,
+        password
+    }
+    let res = await fetch('http://localhost:4000/auth/verifyEmail', {
+        method: 'post',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(temp)
+    })
+    let value = await res.json()
+    return value
+}
+export const getUserById = async (id) => {
+    console.log('im id ', id)
+    let res = await fetch('http://localhost:4000/user/getUserById', {
+        method: 'post',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(id)
+    })
+
+    let value = await res.json()
+    return value
+}
 export default {getUser,
+                getUserById,
                 updateUser,
                 getProd,
-                getUsersTran}
+                getUsersTran,
+                forgotPassword,
+                verifyEmail}

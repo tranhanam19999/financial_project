@@ -2,6 +2,7 @@ import React, {useState} from "react"
 import {useSelector, useDispatch} from "react-redux"
 import {Modal, ModalHeader, ModalBody} from 'reactstrap'
 import {importToCart} from '../../store/cartitem'
+import {Link} from 'react-router-dom'
 const SingleProduct = ({prod}) => {
     const dispatch = useDispatch()
     const cartitem = useSelector(state => {return state.cartitem})
@@ -20,15 +21,12 @@ const SingleProduct = ({prod}) => {
     return(
         <div className="product product__style--3 col-lg-4 col-md-4 col-sm-6 col-12">
             <div className="product__thumb">
-                <a className="first__img" href="single-product.html">
-                <img src="images/books/1.jpg" alt="product image" />
-                </a>
-                <a
-                className="second__img animation1"
-                href="single-product.html"
-                >
-                <img src="images/books/2.jpg" alt="product image" />
-                </a>
+                <Link className="first__img" href="#" to={{pathname: `/ProductDetail`, state:prod}}>
+                    <img src={prod.pictures} alt="product image" height="340" width="250" />
+                </Link>
+                <Link className="second__img animation1" to={{pathname: `/ProductDetail`, state:prod}}>
+                    <img src={prod.pictures} alt="product image" height="340" width="250"/>
+                </Link>
                 {prod.sale >= 50 ? 
                     <div className="hot__box">
                         <span className="hot-label">BEST SALE</span>
@@ -126,7 +124,7 @@ const SingleProduct = ({prod}) => {
                             </div>
                             <div className="row">
                                 <button style={{background:"black", color: "white"}} className="btn btn-primary">
-                                    <a style={{cursor:'pointer'}}onClick={() => handleItem()}>Add to cart</a>
+                                    <a style={{cursor:'pointer'}} onClick={() => handleItem()}>Add to cart</a>
                                 </button>
                             </div>
                         </div>

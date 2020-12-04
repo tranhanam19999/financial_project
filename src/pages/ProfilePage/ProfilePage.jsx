@@ -1,30 +1,59 @@
 import React , {useEffect, useState} from 'react'
-import {useSelector} from 'react-redux'
-import { updateUser } from '../../api/'
+import {useSelector, useDispatch} from 'react-redux'
 import Header from '../../components/Layout/Header'
 import {loadScripts} from '../../_utils/'
+import {updateProfile, updateSuccess} from '../../store/user'
+import { Link } from 'react-router-dom'
+import {storage} from '../../firebase/firebase'
+import { initial } from 'lodash'
 const ProfilePage = () => {
-    const {user} = useSelector(state => {return state})
+    const dispatch = useDispatch()
+    const user = useSelector(state => {return state.user})
     const [initialUser,setInitialUser] = useState(user);
+    const [img,setImg] = useState()
     useEffect(() => {
         document.onload = loadScripts()
     },[])
-    const onChangePicture = e => {
+    const getInputImage = e => {
         if (e.target.files[0]) {
             const reader = new FileReader()
             reader.onload = () => {
                 document.getElementById('img_avatar').src = reader.result
             }
             reader.readAsDataURL(e.target.files[0]);
+            return e.target.files[0]
         }
     }
-    const changeDataUser = async () => {
-        const res = await updateUser(initialUser)
-        localStorage.removeItem('user')
-        localStorage.setItem('user', JSON.stringify(res))
-        window.location.reload()
+    const onChangePicture = async (e) => {
+        let inputImg = await getInputImage(e)
+        setImg(inputImg)
     }
-    if (user)
+    const getDownloadImageURLs = async (val,id, folder) => {
+        const image = val
+        const storageRef = storage.ref(`/${folder}/${id}`)
+        const uploadTask = storageRef.put(image)
+        const url = await new Promise((resolve, reject) => {
+        uploadTask.on('state_changed', 
+            snapShot => {
+                console.log(snapShot)
+            }, 
+            error => reject(error),
+            async () => {
+                const downloadUrl = await uploadTask.snapshot.ref.getDownloadURL();
+                resolve(downloadUrl);
+            })
+        })
+        return url
+    }
+    const changeDataUser = async () => {
+        const temp = await getDownloadImageURLs(img,initialUser._id, 'NamsBookUser')
+        localStorage.removeItem('user')
+        await dispatch(updateProfile({...initialUser,photoUser:temp}))
+        //NOTE FOR CLOSURE IF SET LIKE JSON.stringify(user)
+        localStorage.setItem('user', JSON.stringify(initialUser))
+        alert('Successfully Changed!')
+    }
+    if (user) {
         return (
             <>
             <Header/>
@@ -53,7 +82,7 @@ const ProfilePage = () => {
                             <div className="customer_details">
                                 <h3>Profile</h3>
                                 <div className="customar__field">
-                                <div className="margin_between">
+                                    <div className="margin_between">
                                         <div className="input_box space_between">
                                             <label>Avatar <span>*</span></label>
                                             <img id="img_avatar" src={user.photoUser} width={100} height={96}></img>         
@@ -63,16 +92,18 @@ const ProfilePage = () => {
                                     <div className="margin_between">
                                         <div className="input_box space_between">
                                             <label>Full name <span>*</span></label>
-                                            <input type="text" defaultValue={user.fullName} onChange={(e) => setInitialUser(
-                                                                                            {
-                                                                                                ...initialUser,
-                                                                                                fullName: e.target.value
-                                                                                            })}/>
+                                            <input type="text" defaultValue={user.fullName} 
+                                                onChange={(e) => setInitialUser(
+                                                    {
+                                                        ...initialUser,
+                                                        fullName: e.target.value
+                                                    })}
+                                            />
                                         </div>
                                     </div>                               
                                     <div className="input_box">
-                                        <label>Address <span>*</span></label>
-                                        <input type="text" defaultValue={user.address} onChange={(e) => setInitialUser({
+                                        <label>Email: <span>*</span></label>
+                                        <input type="text" defaultValue={user.local.email} onChange={(e) => setInitialUser({
                                             ...initialUser,
                                             address: e.target.value
                                         })}/>
@@ -96,7 +127,7 @@ const ProfilePage = () => {
                                     <div className="margin_between">
                                         <div className="input_box space_between">
                                             <label>Your Password <span>*</span></label>
-                                            <input type="email" defaultValue={user.local.password} 
+                                            <input type="password" defaultValue={user.local.password} 
                                                 onChange={(e) => setInitialUser({
                                                     ...initialUser,
                                                     local: {
@@ -128,9 +159,10 @@ const ProfilePage = () => {
                                     </div>
                                     <div className="margin_between mt-5">
                                         <div className="input_box space_between row">
-                                            <button className="col-6" style={{height:50}} onClick={() => changeDataUser()}>Save Changes!</button>  
+                                            <button className="btn btn-primary col-6" style={{height:50}} onClick={() => changeDataUser()}>Save Changes!</button>  
                                             <span className="col-2"></span>
-                                            <button className="col-4">Cancel!</button>                                      
+                                            <button className="btn btn-danger col-4"><Link to="/">Cancel!</Link></button>
+                                            {/* <button className="btn btn-danger col-4">Cancel!</button>*/}
                                         </div>
                                     </div>
                                 </div>
@@ -140,7 +172,7 @@ const ProfilePage = () => {
                 </div>
             </section>
             </>
-        )
+        )}
     return (
         <>
             <p> You are not allowed to come here!</p>
