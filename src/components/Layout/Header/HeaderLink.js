@@ -7,7 +7,7 @@ const HeaderLink = () => {
 	const user = useSelector(state => {return state.user})
 	const cartitem = useSelector(state => {return state.cartitem})
     return(
-        <header id="wn__header" className="header__area header__absolute sticky__header">
+        <header id="wn__header" className="header__area sticky__header">
 			<div className="container-fluid">
 				<div className="row">
 					<div className="col-md-6 col-sm-6 col-6 col-lg-2">
@@ -20,7 +20,7 @@ const HeaderLink = () => {
 					<div className="col-lg-8 d-none d-lg-block">
 						<nav className="mainmenu__nav">
 							<ul className="meninmenu d-flex justify-content-start">
-								<li className="drop with--one--item"><a href="index.html">Home</a></li>
+								<li className="drop with--one--item"><Link to="/">Home</Link></li>
 								<li className="drop"><Link to="/Shop">Shop</Link>
 								</li>
 							</ul>

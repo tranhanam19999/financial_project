@@ -48,7 +48,7 @@ const ProductItem = props => {
                     </div>
                     
                      <Modal isOpen={modal} toggle={toggle} size="lg">
-                        <ModalHeader toggle={toggle}>Modal title</ModalHeader>
+                        <ModalHeader toggle={toggle}>Book Detail</ModalHeader>
                             <ModalBody>
                                 <div className="row">
                                     <div className = "col-lg-6 col-12">

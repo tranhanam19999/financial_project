@@ -5,7 +5,7 @@ import {loadScripts} from '../../_utils/'
 import {updateProfile, updateSuccess} from '../../store/user'
 import { Link } from 'react-router-dom'
 import {storage} from '../../firebase/firebase'
-import { initial } from 'lodash'
+
 const ProfilePage = () => {
     const dispatch = useDispatch()
     const user = useSelector(state => {return state.user})

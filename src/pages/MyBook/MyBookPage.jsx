@@ -3,6 +3,7 @@ import {loadScripts} from '../../_utils'
 import Header from '../../components/Layout/Header'
 import { getUsersTran } from '../../api/'
 import { useSelector } from 'react-redux'
+import { Link } from 'react-router-dom'
 const MyBookPage = () => {
     const [listTran,setListTran] = useState()
     const user = useSelector(state => {return state.user})
@@ -22,7 +23,8 @@ const MyBookPage = () => {
             case 'Fun': return "cat--3" 
             case 'Kids': return "cat--4"  
             case 'IT': return "cat--5" 
-            case 'Cook': return "cat--6"       
+            case 'Cook': return "cat--6"
+            case 'Others': return "cat--7"       
         }
     }
     return (
@@ -47,35 +49,36 @@ const MyBookPage = () => {
             {/* Start Bradcaump area */}
             <div className="ht__bradcaump__area bg-image--6">
                 <div className="container">
-                <div className="row">
-                    <div className="col-lg-12">
-                    <div className="bradcaump__inner text-center">
-                        <h2 className="bradcaump-title">My Book Page</h2>
-                        <nav className="bradcaump-content">
-                        <a className="breadcrumb_item" href="index.html">
-                            Home
-                        </a>
-                        <span className="brd-separetor">/</span>
-                        <span className="breadcrumb_item active">My Book Page</span>
-                        </nav>
+                    <div className="row">
+                        <div className="col-lg-12">
+                            <div className="bradcaump__inner text-center">
+                                <h2 className="bradcaump-title">My Book Page</h2>
+                                <nav className="bradcaump-content">
+                                    <Link className="breadcrumb_item" to="/">
+                                        Home
+                                    </Link>
+                                    <span className="brd-separetor">/</span>
+                                    <span className="breadcrumb_item active">My Book Page</span>
+                                </nav>
+                            </div>
+                        </div>
                     </div>
-                    </div>
-                </div>
                 </div>
             </div>
             <section className="wn__portfolio__area gallery__masonry__activation bg--white mt--40 pb--100">
                 <div className="container-fluid">
                     <div className="row">
                         <div className="col-lg-12">
-                        <div className="gallery__menu">
-                            <button data-filter="*" className="is-checked">Filter - All</button>
-                            <button data-filter=".cat--1">Love</button>
-                            <button data-filter=".cat--2">Politics</button>
-                            <button data-filter=".cat--3">Fun</button>
-                            <button data-filter=".cat--4">Kids</button>
-                            <button data-filter=".cat--5">IT</button>
-                            <button data-filter=".cat--6">Cook</button>
-                        </div>
+                            <div className="gallery__menu">
+                                <button data-filter="*" className="is-checked">Filter - All</button>
+                                <button data-filter=".cat--1">Love</button>
+                                <button data-filter=".cat--2">Politics</button>
+                                <button data-filter=".cat--3">Fun</button>
+                                <button data-filter=".cat--4">Kids</button>
+                                <button data-filter=".cat--5">IT</button>
+                                <button data-filter=".cat--6">Cook</button>
+                                <button data-filter=".cat--7">Others</button>
+                            </div>
                         </div>
                     </div>
                     <div className="row masonry__wrap">
